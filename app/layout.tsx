@@ -25,10 +25,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} min-h-screen antialiased`}
       >
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){var t=localStorage.getItem('ryutech-color-theme');if(t&&['ocean','emerald','violet','amber','rose'].includes(t))document.documentElement.setAttribute('data-theme',t);})();`,
+          }}
+        />
         <AppWrapper>{children}</AppWrapper>
       </body>
     </html>

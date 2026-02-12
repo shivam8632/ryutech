@@ -19,8 +19,8 @@ export function Process() {
   const opacity = useTransform(scrollYProgress, [0, 0.2], [0.4, 1]);
 
   return (
-    <section id="process" ref={ref} className="relative py-24 md:py-32">
-      <div className="mx-auto max-w-6xl px-6">
+    <section id="process" ref={ref} className="relative py-24 md:py-32 bg-muted/15 overflow-hidden">
+      <div className="mx-auto max-w-6xl px-6 relative z-10">
         <motion.div className="mb-20 text-center" style={{ opacity }}>
           <p className="mb-2 text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground">
             How we work

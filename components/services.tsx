@@ -74,9 +74,17 @@ export function Services() {
     <section
       id="services"
       ref={sectionRef}
-      className="relative py-24 md:py-32"
+      className="relative overflow-hidden py-24 md:py-32 bg-muted/20"
     >
-      <div className="mx-auto max-w-6xl px-6">
+      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+        <div className="absolute -left-40 -top-20 w-[600px] h-[600px] opacity-50">
+          <Image src="/vectors/blob-1.svg" alt="" width={600} height={600} className="h-full w-full object-contain [color:var(--accent)]" />
+        </div>
+        <div className="absolute right-0 top-1/4 w-[500px] h-[400px] opacity-40 -translate-y-1/2 hidden lg:block">
+          <Image src="/vectors/blob-2.svg" alt="" width={500} height={400} className="h-full w-full object-contain [color:var(--accent)]" />
+        </div>
+      </div>
+      <div className="relative z-10 mx-auto max-w-6xl px-6">
         <motion.div
           className="mb-16 text-center"
           style={{ y, opacity }}
@@ -88,7 +96,7 @@ export function Services() {
             Services that scale with you
           </h2>
         </motion.div>
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 relative z-10">
           {SERVICES.map((service, i) => (
             <ServiceCard key={service.title} {...service} index={i} />
           ))}

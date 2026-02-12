@@ -11,7 +11,7 @@ const buttonStyles = {
   base: "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
   variants: {
     default:
-      "bg-foreground text-background hover:bg-foreground/90 focus-visible:ring-foreground",
+      "bg-accent text-white hover:opacity-90 focus-visible:ring-accent",
     outline:
       "border border-border bg-transparent hover:bg-muted hover:text-foreground focus-visible:ring-foreground",
     ghost: "hover:bg-muted hover:text-foreground focus-visible:ring-foreground",

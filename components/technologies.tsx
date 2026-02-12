@@ -19,8 +19,9 @@ export function Technologies() {
   const inView = useInView(ref, { once: true, margin: "-60px" });
 
   return (
-    <section ref={ref} className="relative border-y border-border/50 bg-muted/30 py-16">
-      <div className="mx-auto max-w-6xl px-6">
+    <section ref={ref} className="relative border-y border-border/50 bg-muted/40 py-16 overflow-hidden">
+      <div className="pointer-events-none absolute inset-0 z-0 opacity-50 [color:var(--muted-foreground)]" style={{ backgroundImage: "url(/vectors/dots-pattern.svg)", backgroundSize: "120px 120px" }} aria-hidden />
+      <div className="relative z-10 mx-auto max-w-6xl px-6">
         <motion.p
           className="mb-8 text-center text-sm font-medium uppercase tracking-[0.2em] text-muted-foreground"
           initial={{ opacity: 0, y: 10 }}

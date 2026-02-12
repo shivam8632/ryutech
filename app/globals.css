@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
-:root {
+:root,
+[data-theme="ocean"] {
   --background: #fafafa;
   --foreground: #0a0a0a;
   --muted: #f4f4f5;
@@ -8,8 +9,92 @@
   --card: #ffffff;
   --card-foreground: #0a0a0a;
   --border: #e4e4e7;
-  --hero-bg: #fafafa;
   --section-bg: #f4f4f5;
+  /* Color theme: accent + hero (dark banner) */
+  --accent: #4a88ff;
+  --hero-bg: #121626;
+  --hero-dashboard-bg: #1a1f2e;
+  --hero-dashboard-card: #212533;
+  --hero-metric-bg: #181c28;
+  --hero-border: #2a3142;
+  --hero-button-bg: #1a1f2e;
+  --hero-button-hover: #222938;
+}
+
+[data-theme="emerald"] {
+  --accent: #10b981;
+  --background: #f5faf8;
+  --foreground: #0f1f1a;
+  --muted: #e8f3ef;
+  --muted-foreground: #4a6b5f;
+  --card: #ffffff;
+  --card-foreground: #0f1f1a;
+  --border: #c5e0d6;
+  --section-bg: #e8f3ef;
+  --hero-bg: #0d1f18;
+  --hero-dashboard-bg: #132a20;
+  --hero-dashboard-card: #1a3528;
+  --hero-metric-bg: #152c22;
+  --hero-border: #1e3d2e;
+  --hero-button-bg: #132a20;
+  --hero-button-hover: #1a3528;
+}
+
+[data-theme="violet"] {
+  --accent: #8b5cf6;
+  --background: #f8f5fc;
+  --foreground: #1a1525;
+  --muted: #efe9f8;
+  --muted-foreground: #5c4d7a;
+  --card: #ffffff;
+  --card-foreground: #1a1525;
+  --border: #ddd0ed;
+  --section-bg: #efe9f8;
+  --hero-bg: #16122a;
+  --hero-dashboard-bg: #1e1835;
+  --hero-dashboard-card: #252042;
+  --hero-metric-bg: #1c1835;
+  --hero-border: #2d2652;
+  --hero-button-bg: #1e1835;
+  --hero-button-hover: #252042;
+}
+
+[data-theme="amber"] {
+  --accent: #f59e0b;
+  --background: #faf8f5;
+  --foreground: #1f1a0f;
+  --muted: #f5f0e8;
+  --muted-foreground: #6b5c4a;
+  --card: #ffffff;
+  --card-foreground: #1f1a0f;
+  --border: #e8ddc8;
+  --section-bg: #f5f0e8;
+  --hero-bg: #1f1810;
+  --hero-dashboard-bg: #2a2218;
+  --hero-dashboard-card: #352d1f;
+  --hero-metric-bg: #2a241a;
+  --hero-border: #3d3225;
+  --hero-button-bg: #2a2218;
+  --hero-button-hover: #352d1f;
+}
+
+[data-theme="rose"] {
+  --accent: #f43f5e;
+  --background: #faf5f6;
+  --foreground: #1f1216;
+  --muted: #f5e8eb;
+  --muted-foreground: #6b4a52;
+  --card: #ffffff;
+  --card-foreground: #1f1216;
+  --border: #e8d0d6;
+  --section-bg: #f5e8eb;
+  --hero-bg: #1f1216;
+  --hero-dashboard-bg: #2a181e;
+  --hero-dashboard-card: #351f26;
+  --hero-metric-bg: #2a1820;
+  --hero-border: #3d252e;
+  --hero-button-bg: #2a181e;
+  --hero-button-hover: #351f26;
 }
 
 @theme inline {
@@ -20,12 +105,13 @@
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-border: var(--border);
+  --color-accent: var(--accent);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme]) {
     --background: #0a0a0a;
     --foreground: #fafafa;
     --muted: #18181b;
@@ -33,7 +119,6 @@
     --card: #18181b;
     --card-foreground: #fafafa;
     --border: #27272a;
-    --hero-bg: #0a0a0a;
     --section-bg: #18181b;
   }
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { MagneticButton } from "@/components/magnetic-button";
@@ -8,9 +9,14 @@ export function CTA() {
   return (
     <section
       id="contact"
-      className="relative py-24 md:py-32"
+      className="relative py-24 md:py-32 overflow-hidden bg-muted/30"
     >
-      <div className="mx-auto max-w-4xl px-6 text-center">
+      <div className="pointer-events-none absolute inset-0 z-0 [color:var(--accent)]">
+        <div className="relative w-full h-full">
+          <Image src="/vectors/section-shapes.svg" alt="" fill className="object-cover opacity-40" sizes="100vw" />
+        </div>
+      </div>
+      <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
         <motion.h2
           className="text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl"
           initial={{ opacity: 0, y: 20 }}

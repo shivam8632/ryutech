@@ -7,6 +7,7 @@ import { InteractiveTechStrip } from "@/components/interactive-tech-strip";
 import { Technologies } from "@/components/technologies";
 import { Process } from "@/components/process";
 import { Stats } from "@/components/stats";
+import { Testimonials } from "@/components/testimonials";
 import { CTA } from "@/components/cta";
 import { Footer } from "@/components/footer";
 
@@ -17,13 +18,14 @@ export default function Home() {
       <main>
         <Hero />
         <ScrollPinSection />
-        <div className="bg-background">
+        <div className="bg-background min-h-screen">
           <Services />
           <Projects />
           <InteractiveTechStrip />
           <Technologies />
           <Process />
           <Stats />
+          <Testimonials />
           <CTA />
         </div>
       </main>

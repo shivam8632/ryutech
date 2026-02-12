@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { ThemePicker } from "@/components/theme-picker";
 
 const NAV_LINKS = [
   { label: "Services", href: "#services" },
@@ -39,6 +40,7 @@ export function Header() {
         </nav>
 
         <div className="hidden items-center gap-4 md:flex">
+          <ThemePicker />
           <Button variant="ghost" size="sm" asChild>
             <a href="#contact">Get in touch</a>
           </Button>
@@ -77,6 +79,10 @@ export function Header() {
             className="overflow-hidden border-t border-border/40 md:hidden"
           >
             <nav className="flex flex-col gap-4 px-6 py-6">
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-medium text-muted-foreground">Color theme</span>
+                <ThemePicker />
+              </div>
               {NAV_LINKS.map((link) => (
                 <a
                   key={link.href}

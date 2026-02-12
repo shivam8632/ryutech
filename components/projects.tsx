@@ -8,51 +8,27 @@ import { TiltCard } from "@/components/tilt-card";
 
 const PROJECTS = [
   {
-    id: "featured",
-    title: "Nexus Dashboard",
+    id: "exclusive-links",
+    title: "Exclusive Links",
     category: "Web Application",
-    description: "Real-time analytics and reporting platform for enterprise teams. Built with React, Node, and real-time sync.",
-    image: "/images/projects/project-1.jpg",
+    description: "Listing platform with dashboard, create listing, and details views. Built for streamlined listing management and user workflows.",
+    image: "/images/projects/exclusive-links/dashboard.png",
     featured: true,
   },
   {
-    id: "2",
-    title: "Flow Commerce",
-    category: "E‑commerce",
-    description: "Headless storefront with custom checkout and inventory sync.",
-    image: "/images/projects/project-2.jpg",
+    id: "helix",
+    title: "Helix",
+    category: "Inventory & Logistics",
+    description: "Warehouse and inventory management with vendor portal, login, and warehouse views.",
+    image: "/images/projects/helix/warehouse.png",
     featured: false,
   },
   {
-    id: "3",
-    title: "Pulse Health",
-    category: "Healthcare",
-    description: "Patient portal and appointment system with HIPAA-aligned security.",
-    image: "/images/projects/project-3.jpg",
-    featured: false,
-  },
-  {
-    id: "4",
-    title: "Atlas Design System",
-    category: "Design & Dev",
-    description: "Component library and design tokens for consistent product UI.",
-    image: "/images/projects/project-4.jpg",
-    featured: false,
-  },
-  {
-    id: "5",
-    title: "Vault API",
-    category: "Integration",
-    description: "Unified API gateway and developer documentation portal.",
-    image: "/images/projects/project-5.jpg",
-    featured: false,
-  },
-  {
-    id: "6",
-    title: "Echo CMS",
-    category: "Content Platform",
-    description: "Headless CMS with visual editor and multi-site support.",
-    image: "/images/projects/project-6.jpg",
+    id: "nurture-pnw-staffing",
+    title: "Nurture PNW Staffing",
+    category: "Staffing",
+    description: "Staffing and recruitment platform with a clean, focused home experience.",
+    image: "/images/projects/nurture-pnw-staffing/home.png",
     featured: false,
   },
 ];
@@ -195,63 +171,63 @@ function ProjectCard({
         <motion.a
           href="#"
           className="block h-full"
-        initial={{ opacity: 0, y: 36, scale: 0.96 }}
-        animate={
-          inView
-            ? { opacity: 1, y: 0, scale: 1 }
-            : { opacity: 0, y: 36, scale: 0.96 }
-        }
-        transition={{
-          duration: 0.6,
-          delay: index * 0.1,
-          ease: [0.22, 1, 0.36, 1],
-        }}
-      >
-        <div className="relative aspect-[4/3] overflow-hidden">
-          <motion.div
-            className="absolute inset-0"
-            animate={{ scale: hover ? 1.1 : 1 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <Image
-              src={project.image}
-              alt=""
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
+          initial={{ opacity: 0, y: 36, scale: 0.96 }}
+          animate={
+            inView
+              ? { opacity: 1, y: 0, scale: 1 }
+              : { opacity: 0, y: 36, scale: 0.96 }
+          }
+          transition={{
+            duration: 0.6,
+            delay: index * 0.1,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+        >
+          <div className="relative aspect-[4/3] overflow-hidden">
+            <motion.div
+              className="absolute inset-0"
+              animate={{ scale: hover ? 1.1 : 1 }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <Image
+                src={project.image}
+                alt=""
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
+              />
+            </motion.div>
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent"
+              initial={false}
+              animate={{ opacity: hover ? 1 : 0 }}
+              transition={{ duration: 0.3 }}
             />
-          </motion.div>
-          <motion.div
-            className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent"
-            initial={false}
-            animate={{ opacity: hover ? 1 : 0 }}
-            transition={{ duration: 0.3 }}
-          />
-          <motion.span
-            className="absolute left-3 top-3 rounded-full bg-background/90 px-2.5 py-1 text-xs font-medium text-foreground backdrop-blur-sm"
-            initial={false}
-            animate={{ scale: hover ? 1.02 : 1 }}
-            transition={{ duration: 0.2 }}
-          >
-            {project.category}
-          </motion.span>
-        </div>
-        <div className="p-5">
-          <h3 className="text-lg font-semibold tracking-tight text-foreground transition-colors group-hover:text-foreground/90">
-            {project.title}
-          </h3>
-          <p className="mt-1.5 line-clamp-2 text-sm text-muted-foreground">
-            {project.description}
-          </p>
-          <motion.span
-            className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-foreground/80"
-            animate={{ x: hover ? 6 : 0 }}
-            transition={{ type: "spring", stiffness: 400, damping: 25 }}
-          >
-            View project →
-          </motion.span>
-        </div>
-      </motion.a>
+            <motion.span
+              className="absolute left-3 top-3 rounded-full bg-background/90 px-2.5 py-1 text-xs font-medium text-foreground backdrop-blur-sm"
+              initial={false}
+              animate={{ scale: hover ? 1.02 : 1 }}
+              transition={{ duration: 0.2 }}
+            >
+              {project.category}
+            </motion.span>
+          </div>
+          <div className="p-5">
+            <h3 className="text-lg font-semibold tracking-tight text-foreground transition-colors group-hover:text-foreground/90">
+              {project.title}
+            </h3>
+            <p className="mt-1.5 line-clamp-2 text-sm text-muted-foreground">
+              {project.description}
+            </p>
+            <motion.span
+              className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-foreground/80"
+              animate={{ x: hover ? 6 : 0 }}
+              transition={{ type: "spring", stiffness: 400, damping: 25 }}
+            >
+              View project →
+            </motion.span>
+          </div>
+        </motion.a>
       </TiltCard>
     </motion.article>
   );
@@ -278,10 +254,13 @@ export function Projects() {
     <section
       id="projects"
       ref={sectionRef}
-      className="relative overflow-hidden py-24 md:py-32"
+      className="relative overflow-hidden pb-24 md:pb-32 bg-background"
     >
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-muted/30 via-transparent to-transparent" aria-hidden />
-      <div className="mx-auto max-w-6xl px-6">
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-muted/40 via-muted/10 to-transparent" aria-hidden />
+      <div className="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center opacity-30 [color:var(--accent)]">
+        <Image src="/vectors/circuit-lines.svg" alt="" width={400} height={300} className="max-w-full max-h-full object-contain" />
+      </div>
+      <div className="relative z-10 mx-auto max-w-6xl px-6">
         <motion.div
           ref={headingRef}
           className="mb-16 text-center md:mb-20"
