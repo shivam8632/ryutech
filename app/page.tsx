@@ -1,6 +1,7 @@
 import { Navbar } from "@/components/navbar"
 import { HeroSection } from "@/components/hero-section"
 import { ProductsSection } from "@/components/products-section"
+import { ProjectsSection } from "@/components/projects-section"
 import { InnovationSection } from "@/components/innovation-section"
 import { StatsSection } from "@/components/stats-section"
 import { CTASection } from "@/components/cta-section"
@@ -18,6 +19,8 @@ export default function Page() {
       <SectionDivider variant="gradient" />
       <ProductsSection />
       <SectionDivider variant="dots" />
+      <ProjectsSection />
+      <SectionDivider variant="gradient" />
       <InnovationSection />
       <SectionDivider variant="gradient" />
       <StatsSection />
