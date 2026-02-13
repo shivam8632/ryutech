@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button"
 import { ScrollReveal } from "@/components/scroll-reveal"
 import { ArrowRight } from "lucide-react"
 
-
 export function StatsSection() {
   return (
     <section id="stats" className="py-20 bg-navy relative overflow-hidden scroll-mt-20">
