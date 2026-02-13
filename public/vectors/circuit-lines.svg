@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none" stroke="currentColor" strokeWidth="0.8" strokeOpacity="0.06">
-  <path d="M0 80h80v40H0zM120 60h100v20h-100zM120 120h60v20h-60z"/>
-  <path d="M240 40v80h40V40zM320 80h60v40h-60z"/>
-  <circle cx="80" cy="100" r="4" fill="currentColor" fillOpacity="0.08"/>
-  <circle cx="220" cy="80" r="4" fill="currentColor" fillOpacity="0.08"/>
-  <circle cx="320" cy="100" r="4" fill="currentColor" fillOpacity="0.08"/>
-  <path d="M180 180h140v20H180zM60 220h200v20H60z"/>
-  <circle cx="250" cy="190" r="4" fill="currentColor" fillOpacity="0.08"/>
-</svg>

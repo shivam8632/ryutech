@@ -1,41 +1,24 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import { AppWrapper } from "@/components/app-wrapper";
-import "./globals.css";
+import type { Metadata } from 'next'
+import { Inter, Playfair_Display } from 'next/font/google'
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+import './globals.css'
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
+const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair' })
 
 export const metadata: Metadata = {
-  title: "RyuTech | Website & Web App Development",
-  description:
-    "IT services for website development and web applications. We build fast, scalable, and goal-focused digital products.",
-};
+  title: 'Ryutech - Build Better, Operate Smarter, Grow Faster',
+  description: 'At Ryutech, we specialize in creating innovative software and high-performance websites that drive business transformation.',
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} min-h-screen antialiased`}
-      >
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){var t=localStorage.getItem('ryutech-color-theme');if(t&&['ocean','emerald','violet','amber','rose'].includes(t))document.documentElement.setAttribute('data-theme',t);})();`,
-          }}
-        />
-        <AppWrapper>{children}</AppWrapper>
-      </body>
+    <html lang="en">
+      <body className={`${inter.variable} ${playfair.variable} font-sans antialiased`}>{children}</body>
     </html>
-  );
+  )
 }

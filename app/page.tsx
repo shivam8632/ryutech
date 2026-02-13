@@ -1,35 +1,30 @@
-import { Header } from "@/components/header";
-import { Hero } from "@/components/hero";
-import { ScrollPinSection } from "@/components/scroll-pin-section";
-import { Services } from "@/components/services";
-import { Projects } from "@/components/projects";
-import { InteractiveTechStrip } from "@/components/interactive-tech-strip";
-import { Technologies } from "@/components/technologies";
-import { Process } from "@/components/process";
-import { Stats } from "@/components/stats";
-import { Testimonials } from "@/components/testimonials";
-import { CTA } from "@/components/cta";
-import { Footer } from "@/components/footer";
+import { Navbar } from "@/components/navbar"
+import { HeroSection } from "@/components/hero-section"
+import { ProductsSection } from "@/components/products-section"
+import { InnovationSection } from "@/components/innovation-section"
+import { StatsSection } from "@/components/stats-section"
+import { CTASection } from "@/components/cta-section"
+import { Footer } from "@/components/footer"
+import { ScrollProgress } from "@/components/scroll-progress"
+import { BackToTop } from "@/components/back-to-top"
+import { SectionDivider } from "@/components/section-divider"
 
-export default function Home() {
+export default function Page() {
   return (
-    <>
-      <Header />
-      <main>
-        <Hero />
-        <ScrollPinSection />
-        <div className="bg-background min-h-screen">
-          <Services />
-          <Projects />
-          <InteractiveTechStrip />
-          <Technologies />
-          <Process />
-          <Stats />
-          <Testimonials />
-          <CTA />
-        </div>
-      </main>
+    <main className="min-h-screen">
+      <ScrollProgress />
+      <Navbar />
+      <HeroSection />
+      <SectionDivider variant="gradient" />
+      <ProductsSection />
+      <SectionDivider variant="dots" />
+      <InnovationSection />
+      <SectionDivider variant="gradient" />
+      <StatsSection />
+      <SectionDivider variant="wave" />
+      <CTASection />
       <Footer />
-    </>
-  );
+      <BackToTop />
+    </main>
+  )
 }
