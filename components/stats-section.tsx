@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef, useState, useEffect, useCallback } from "react"
+import { useRef, useState, useEffect } from "react"
 import { motion, useInView } from "framer-motion"
 
 const ease = [0.21, 0.47, 0.32, 0.98] as const
@@ -18,41 +18,7 @@ const technologies = [
   "Redis", "Figma", "Tailwind CSS", "Prisma",
 ]
 
-/* ── Text scramble hook ── */
-function useScramble(finalText: string, active: boolean) {
-  const [display, setDisplay] = useState(finalText)
-  const chars = "0123456789%+!#—?="
-
-  const scramble = useCallback(() => {
-    if (!active) return
-    let frame = 0
-    const totalFrames = 25
-
-    const interval = setInterval(() => {
-      frame++
-      const progress = frame / totalFrames
-      const result = finalText
-        .split("")
-        .map((char, i) => {
-          if (char === " ") return " "
-          if (i / finalText.length < progress) return char
-          return chars[Math.floor(Math.random() * chars.length)]
-        })
-        .join("")
-      setDisplay(result)
-      if (frame >= totalFrames) clearInterval(interval)
-    }, 35)
-
-    return () => clearInterval(interval)
-  }, [active, finalText, chars])
-
-  useEffect(() => {
-    const cleanup = scramble()
-    return cleanup
-  }, [scramble])
-
-  return display
-}
+const SCRAMBLE_CHARS = "0123456789%+!#—?="
 
 function ScrambleStat({
   value,
@@ -65,7 +31,33 @@ function ScrambleStat({
   delay: number
   active: boolean
 }) {
-  const display = useScramble(value, active)
+  const [display, setDisplay] = useState(value)
+  const hasRun = useRef(false)
+
+  useEffect(() => {
+    if (!active || hasRun.current) return
+    hasRun.current = true
+
+    let frame = 0
+    const totalFrames = 25
+
+    const interval = setInterval(() => {
+      frame++
+      const progress = frame / totalFrames
+      const result = value
+        .split("")
+        .map((char, i) => {
+          if (char === " ") return " "
+          if (i / value.length < progress) return char
+          return SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)]
+        })
+        .join("")
+      setDisplay(result)
+      if (frame >= totalFrames) clearInterval(interval)
+    }, 35)
+
+    return () => clearInterval(interval)
+  }, [active, value])
 
   return (
     <motion.div
@@ -87,11 +79,9 @@ export function StatsSection() {
 
   return (
     <section id="work" className="py-32 lg:py-40 relative" ref={ref}>
-      {/* ambient glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-primary/[0.02] rounded-full blur-[160px]" />
 
       <div className="max-w-7xl mx-auto px-6 relative">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -113,7 +103,6 @@ export function StatsSection() {
           Results speak
         </motion.h2>
 
-        {/* Scramble stats */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-16 mb-28 lg:mb-36">
           {stats.map((stat, i) => (
             <ScrambleStat
@@ -126,7 +115,6 @@ export function StatsSection() {
           ))}
         </div>
 
-        {/* Tech strip */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}

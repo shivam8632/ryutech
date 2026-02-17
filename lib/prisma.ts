@@ -1,20 +1,27 @@
 import { PrismaClient } from "@/lib/generated/prisma/client"
-import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3"
-import Database from "better-sqlite3"
-import path from "path"
+import { PrismaLibSql } from "@prisma/adapter-libsql"
+import { createClient } from "@libsql/client"
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined
 }
 
-function createClient() {
-  const dbPath = path.join(process.cwd(), "prisma", "dev.db")
-  const database = new Database(dbPath)
-  const adapter = new PrismaBetterSqlite3(database)
+function createPrismaClient() {
+  const url =
+    process.env.TURSO_DATABASE_URL ??
+    process.env.DATABASE_URL ??
+    "file:./prisma/dev.db"
+
+  const client = createClient({
+    url,
+    authToken: process.env.TURSO_AUTH_TOKEN,
+  })
+
+  const adapter = new PrismaLibSql(client)
   return new PrismaClient({ adapter })
 }
 
-export const prisma = globalForPrisma.prisma ?? createClient()
+export const prisma = globalForPrisma.prisma ?? createPrismaClient()
 
 if (process.env.NODE_ENV !== "production") {
   globalForPrisma.prisma = prisma

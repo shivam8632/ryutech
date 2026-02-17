@@ -1,38 +1,53 @@
 "use client"
 
-import { useEffect, type ReactNode } from "react"
+import { useEffect, useRef, type ReactNode } from "react"
+import { usePathname } from "next/navigation"
 
 export function SmoothScroll({ children }: { children: ReactNode }) {
-  useEffect(() => {
-    let lenis: InstanceType<typeof import("lenis").default> | null = null
-    let raf: number
+  const lenisRef = useRef<InstanceType<typeof import("lenis").default> | null>(
+    null,
+  )
+  const rafRef = useRef<number>(0)
+  const pathname = usePathname()
 
+  useEffect(() => {
     async function init() {
       try {
         const Lenis = (await import("lenis")).default
-        lenis = new Lenis({
+        const instance = new Lenis({
           duration: 1.1,
           easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
           touchMultiplier: 1.5,
         })
+        lenisRef.current = instance
 
         function onFrame(time: number) {
-          lenis?.raf(time)
-          raf = requestAnimationFrame(onFrame)
+          instance.raf(time)
+          rafRef.current = requestAnimationFrame(onFrame)
         }
-        raf = requestAnimationFrame(onFrame)
+        rafRef.current = requestAnimationFrame(onFrame)
       } catch {
-        // Graceful fallback if lenis isn't available
+        /* lenis unavailable — native scroll is fine */
       }
     }
 
     init()
 
     return () => {
-      cancelAnimationFrame(raf)
-      lenis?.destroy()
+      cancelAnimationFrame(rafRef.current)
+      lenisRef.current?.destroy()
+      lenisRef.current = null
     }
   }, [])
+
+  /* scroll to top on every route change */
+  useEffect(() => {
+    if (lenisRef.current) {
+      lenisRef.current.scrollTo(0, { immediate: true })
+    } else {
+      window.scrollTo(0, 0)
+    }
+  }, [pathname])
 
   return <>{children}</>
 }
