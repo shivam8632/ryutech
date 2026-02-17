@@ -1,57 +1,155 @@
-import { Button } from "@/components/ui/button"
-import { ScrollReveal } from "@/components/scroll-reveal"
-import { ArrowRight } from "lucide-react"
+"use client"
 
+import { useRef, useState, useEffect, useCallback } from "react"
+import { motion, useInView } from "framer-motion"
+
+const ease = [0.21, 0.47, 0.32, 0.98] as const
+
+const stats = [
+  { value: "200+", label: "Projects Delivered" },
+  { value: "50+", label: "Active Clients" },
+  { value: "99%", label: "Client Satisfaction" },
+  { value: "5+", label: "Years of Craft" },
+]
+
+const technologies = [
+  "React", "Next.js", "Node.js", "TypeScript", "Python", "Go",
+  "AWS", "PostgreSQL", "MongoDB", "Docker", "Kubernetes", "GraphQL",
+  "Redis", "Figma", "Tailwind CSS", "Prisma",
+]
+
+/* ── Text scramble hook ── */
+function useScramble(finalText: string, active: boolean) {
+  const [display, setDisplay] = useState(finalText)
+  const chars = "0123456789%+!#—?="
+
+  const scramble = useCallback(() => {
+    if (!active) return
+    let frame = 0
+    const totalFrames = 25
+
+    const interval = setInterval(() => {
+      frame++
+      const progress = frame / totalFrames
+      const result = finalText
+        .split("")
+        .map((char, i) => {
+          if (char === " ") return " "
+          if (i / finalText.length < progress) return char
+          return chars[Math.floor(Math.random() * chars.length)]
+        })
+        .join("")
+      setDisplay(result)
+      if (frame >= totalFrames) clearInterval(interval)
+    }, 35)
+
+    return () => clearInterval(interval)
+  }, [active, finalText, chars])
+
+  useEffect(() => {
+    const cleanup = scramble()
+    return cleanup
+  }, [scramble])
+
+  return display
+}
+
+function ScrambleStat({
+  value,
+  label,
+  delay,
+  active,
+}: {
+  value: string
+  label: string
+  delay: number
+  active: boolean
+}) {
+  const display = useScramble(value, active)
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      animate={active ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.7, delay, ease }}
+    >
+      <div className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white tracking-tight tabular-nums mb-2 font-mono">
+        {display}
+      </div>
+      <div className="text-sm text-white/30 tracking-wide">{label}</div>
+    </motion.div>
+  )
+}
 
 export function StatsSection() {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: "-100px" })
+
   return (
-    <section id="stats" className="py-20 bg-navy relative overflow-hidden scroll-mt-20">
-      <div className="absolute top-0 right-0 w-80 h-80 bg-[hsl(217,91%,60%)]/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 left-0 w-64 h-64 bg-[hsl(262,83%,58%)]/5 rounded-full blur-3xl" />
+    <section id="work" className="py-32 lg:py-40 relative" ref={ref}>
+      {/* ambient glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-primary/[0.02] rounded-full blur-[160px]" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <ScrollReveal animation="slide-in-left">
-            <div>
-              <span className="inline-block text-xs text-[hsl(217,91%,60%)] font-medium uppercase tracking-wider mb-3">
-                Our impact
-              </span>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif text-white leading-tight mb-6">
-                Empowering businesses with{" "}
-                <span className="italic text-[hsl(217,91%,60%)]">smart technology</span> and{" "}
-                <span className="italic">scalable solutions.</span>
-              </h2>
+      <div className="max-w-7xl mx-auto px-6 relative">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, ease }}
+          className="flex items-center gap-3 mb-4"
+        >
+          <span className="w-8 h-px bg-primary/60" />
+          <span className="text-[11px] font-medium text-white/30 tracking-[0.2em] uppercase">
+            Impact
+          </span>
+        </motion.div>
 
-              <p className="text-gray-400 text-sm leading-relaxed mb-8 max-w-lg">
-                At Ryutech, we deliver high-quality IT solutions that help businesses thrive. Whether it&apos;s building custom websites, automating workflows with our CRM, or improving productivity with our work hour monitor and automated dialers, we have the tools to drive your success.
-              </p>
+        <motion.h2
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, delay: 0.1, ease }}
+          className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight mb-20 lg:mb-28"
+        >
+          Results speak
+        </motion.h2>
 
-              <div className="flex flex-wrap items-center gap-4 mb-10">
-                <span className="text-sm text-gray-400">IT PROJECTS DONE</span>
-                <div className="h-px flex-1 bg-white/10" />
-                <span className="text-sm text-gray-400">Business Consultations</span>
-              </div>
-
-              <Button className="bg-foreground text-background hover:bg-foreground/90 rounded-full px-8 py-5 text-sm font-medium">
-                Get in Touch
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
-            </div>
-          </ScrollReveal>
-
-          <ScrollReveal animation="slide-in-right" delay={200}>
-            <div className="grid grid-cols-2 gap-6">
-              <div className="bg-navy-light/80 border border-white/10 rounded-2xl p-6 text-center">
-                <div className="text-4xl sm:text-5xl font-bold text-white mb-2">150+</div>
-                <p className="text-gray-400 text-sm">IT Solutions Deployed</p>
-              </div>
-              <div className="bg-navy-light/80 border border-white/10 rounded-2xl p-6 text-center">
-                <div className="text-4xl sm:text-5xl font-bold text-white mb-2">100+</div>
-                <p className="text-gray-400 text-sm">Happy Clients Worldwide</p>
-              </div>
-            </div>
-          </ScrollReveal>
+        {/* Scramble stats */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-16 mb-28 lg:mb-36">
+          {stats.map((stat, i) => (
+            <ScrambleStat
+              key={stat.label}
+              value={stat.value}
+              label={stat.label}
+              delay={0.15 + i * 0.1}
+              active={isInView}
+            />
+          ))}
         </div>
+
+        {/* Tech strip */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="border-t border-white/[0.06] pt-14"
+        >
+          <p className="text-[11px] font-medium text-white/20 tracking-[0.2em] uppercase mb-8 text-center">
+            Technologies We Master
+          </p>
+          <div className="flex flex-wrap justify-center gap-2.5">
+            {technologies.map((tech, i) => (
+              <motion.span
+                key={tech}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                transition={{ duration: 0.4, delay: 0.7 + i * 0.03 }}
+                className="text-[11px] text-white/25 bg-white/[0.02] border border-white/[0.05] rounded-full px-4 py-2 hover:bg-white/[0.05] hover:text-white/50 hover:border-white/[0.1] transition-all duration-300 cursor-default"
+              >
+                {tech}
+              </motion.span>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </section>
   )

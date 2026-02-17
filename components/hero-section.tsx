@@ -1,104 +1,288 @@
-import { Button } from "@/components/ui/button"
-import { ScrollReveal } from "@/components/scroll-reveal"
-import { HeroParallaxGlows } from "@/components/parallax-bg"
-import { Star, ArrowRight, Zap, Shield } from "lucide-react"
+"use client"
 
-function MetricBar({ label, value, color }: { label: string; value: number; color: string }) {
+import { useEffect, useState, useCallback } from "react"
+import { motion, useMotionValue, useSpring } from "framer-motion"
+import { ArrowRight, Code2, Palette, Cpu, Globe } from "lucide-react"
+
+const ease = [0.21, 0.47, 0.32, 0.98] as const
+
+/* ── word-by-word clip-reveal ── */
+function RevealLine({
+  children,
+  delay,
+  className = "",
+}: {
+  children: string
+  delay: number
+  className?: string
+}) {
+  const words = children.split(" ")
   return (
-    <div className="flex items-center gap-3">
-      <span className="text-xs text-gray-400 w-40 shrink-0">{label}</span>
-      <div className="flex-1 h-2 bg-white/10 rounded-full overflow-hidden">
-        <div
-          className="h-full rounded-full transition-all duration-1000"
-          style={{ width: `${value}%`, backgroundColor: color }}
-        />
-      </div>
-      <span className="text-xs text-white font-medium w-10 text-right">{value}%</span>
-    </div>
+    <span className={`block ${className}`}>
+      {words.map((word, i) => (
+        <span key={i} className="inline-block overflow-hidden mr-[0.27em]">
+          <motion.span
+            className="inline-block"
+            initial={{ y: "110%" }}
+            animate={{ y: 0 }}
+            transition={{
+              duration: 0.6,
+              delay: delay + i * 0.065,
+              ease,
+            }}
+          >
+            {word}
+          </motion.span>
+        </span>
+      ))}
+    </span>
   )
 }
 
+/* ── floating service chips ── */
+const chips = [
+  { icon: Globe, label: "Web", x: 10, y: 12, depth: 1.0 },
+  { icon: Palette, label: "Design", x: 60, y: 8, depth: 0.6 },
+  { icon: Code2, label: "Software", x: 5, y: 58, depth: 0.8 },
+  { icon: Cpu, label: "Automation", x: 55, y: 65, depth: 0.5 },
+]
+
+const metrics = [
+  { value: "200+", label: "Projects Delivered" },
+  { value: "50+", label: "Active Clients" },
+  { value: "99%", label: "Client Satisfaction" },
+  { value: "5+", label: "Years Experience" },
+]
+
 export function HeroSection() {
+  /* ── mouse parallax ── */
+  const mouseX = useMotionValue(0)
+  const mouseY = useMotionValue(0)
+  const smoothX = useSpring(mouseX, { stiffness: 50, damping: 20 })
+  const smoothY = useSpring(mouseY, { stiffness: 50, damping: 20 })
+
+  const [mounted, setMounted] = useState(false)
+
+  const handleMouseMove = useCallback(
+    (e: MouseEvent) => {
+      const cx = (e.clientX / window.innerWidth - 0.5) * 2
+      const cy = (e.clientY / window.innerHeight - 0.5) * 2
+      mouseX.set(cx)
+      mouseY.set(cy)
+    },
+    [mouseX, mouseY],
+  )
+
+  useEffect(() => {
+    setMounted(true)
+    window.addEventListener("mousemove", handleMouseMove)
+    return () => window.removeEventListener("mousemove", handleMouseMove)
+  }, [handleMouseMove])
+
   return (
-    <section id="hero" className="relative bg-navy pt-24 pb-16 overflow-hidden">
-      <HeroParallaxGlows />
+    <section className="relative min-h-screen flex items-center overflow-hidden">
+      {/* ── animated gradient mesh bg ── */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 dot-grid" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left Content */}
-          <div className="space-y-6">
-            <ScrollReveal animation="fade-in-up">
-              <div className="flex items-center gap-3 mb-8">
-                <span className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 text-xs text-gray-300">
-                  <Zap className="w-3 h-3 text-[hsl(217,91%,60%)]" />
-                  Empowering Faster Ready Solutions
+        {/* Gradient orbs that shift with mouse */}
+        <motion.div
+          className="absolute w-[700px] h-[700px] rounded-full blur-[160px] opacity-[0.07]"
+          style={{
+            background:
+              "radial-gradient(circle, hsl(217 91% 60%), transparent 70%)",
+            left: "40%",
+            top: "20%",
+            x: mounted ? smoothX : 0,
+            y: mounted ? smoothY : 0,
+            scale: 1,
+          }}
+        />
+        <motion.div
+          className="absolute w-[500px] h-[500px] rounded-full blur-[140px] opacity-[0.05]"
+          style={{
+            background:
+              "radial-gradient(circle, hsl(250 80% 67%), transparent 70%)",
+            right: "10%",
+            bottom: "10%",
+          }}
+        />
+        <motion.div
+          className="absolute w-[400px] h-[400px] rounded-full blur-[120px] opacity-[0.04]"
+          style={{
+            background:
+              "radial-gradient(circle, hsl(280 70% 60%), transparent 70%)",
+            left: "10%",
+            bottom: "30%",
+          }}
+        />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 relative w-full">
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-16 items-center pt-32 lg:pt-40 pb-32">
+          {/* ── Left: Typography-driven content ── */}
+          <div className="lg:col-span-7 space-y-8">
+            {/* eyebrow */}
+            <motion.div
+              initial={{ opacity: 0, width: 0 }}
+              animate={{ opacity: 1, width: "auto" }}
+              transition={{ duration: 0.8, delay: 0.1, ease }}
+            >
+              <span className="inline-flex items-center gap-3 text-[11px] font-medium text-white/30 tracking-[0.2em] uppercase overflow-hidden">
+                <motion.span
+                  className="block w-8 h-px bg-primary/60"
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ duration: 0.6, delay: 0.3 }}
+                  style={{ transformOrigin: "left" }}
+                />
+                Digital Engineering Studio
+              </span>
+            </motion.div>
+
+            {/* Main headline — word-by-word clip reveal */}
+            <h1 className="text-[clamp(2.8rem,6.5vw,6rem)] font-bold text-white leading-[0.92] tracking-tight">
+              <RevealLine delay={0.35}>We engineer</RevealLine>
+              <RevealLine delay={0.55}>digital products</RevealLine>
+              <RevealLine delay={0.75} className="gradient-text">
+                with precision.
+              </RevealLine>
+            </h1>
+
+            {/* Subtext */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 1.1, ease }}
+              className="text-[17px] text-white/30 max-w-md leading-relaxed"
+            >
+              From concept to deployment — software that scales your business.
+              No templates. No shortcuts. Just craft.
+            </motion.p>
+
+            {/* CTAs */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 1.3, ease }}
+              className="flex flex-wrap items-center gap-5 pt-2"
+            >
+              <a
+                href="/contact"
+                className="group relative inline-flex items-center gap-2 text-sm font-medium text-white bg-primary hover:bg-primary/90 rounded-full px-7 py-3.5 transition-all duration-300 overflow-hidden"
+              >
+                <span className="relative z-10 flex items-center gap-2">
+                  Start a Project
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
                 </span>
-                <span className="inline-flex items-center gap-1 bg-white/5 border border-white/10 rounded-full px-3 py-1.5 text-xs text-gray-400">
-                  <Shield className="w-3 h-3" /> Verified
-                </span>
-              </div>
-
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
-                Build Better{" "}
-                <span className="font-serif italic text-[hsl(217,91%,60%)]">Operate Smarter</span>
-                <br />
-                Grow Faster
-              </h1>
-
-              <p className="text-gray-400 text-base leading-relaxed mb-8 max-w-lg">
-                At Ryutech, we specialize in creating innovative software and high-performance websites that drive business transformation. Our solutions are designed to help your business scale, improve efficiency, and adapt to the digital age with ease.
-              </p>
-
-              <div className="flex flex-wrap items-center gap-4 mb-10">
-                <Button className="bg-[hsl(217,91%,60%)] hover:bg-[hsl(217,91%,50%)] text-white rounded-full px-8 py-6 text-sm font-medium">
-                  Start Your Journey
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
-                <Button
-                  variant="outline"
-                  className="border-white/20 text-white hover:bg-white/5 hover:text-white rounded-full px-8 py-6 text-sm font-medium bg-transparent"
-                >
-                  Our Services
-                </Button>
-              </div>
-
-              <div className="flex flex-wrap items-center gap-6">
-                <div className="flex items-center gap-2">
-                  <div className="flex">
-                    {[1, 2, 3, 4, 5].map((i) => (
-                      <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                    ))}
-                  </div>
-                  <span className="text-white text-sm font-semibold">5,818</span>
-                </div>
-                <div className="h-4 w-px bg-white/20" />
-                <span className="text-gray-400 text-sm">500+ Successful Projects</span>
-                <div className="h-4 w-px bg-white/20" />
-                <span className="text-gray-400 text-sm">Support 24/7</span>
-              </div>
-            </ScrollReveal>
+                {/* shine sweep on hover */}
+                <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+              </a>
+              <a
+                href="#services"
+                className="group inline-flex items-center gap-2 text-sm font-medium text-white/40 hover:text-white/70 transition-colors duration-300 px-1"
+              >
+                Explore Services
+                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+              </a>
+            </motion.div>
           </div>
 
-          {/* Right Content - Metrics Card */}
-          <ScrollReveal animation="slide-in-right" delay={200}>
-          <div className="relative">
-            <div className="bg-navy-light/80 backdrop-blur-xl border border-white/10 rounded-2xl p-6 shadow-2xl">
-              <h3 className="text-white font-semibold text-lg mb-6">Our Key Metrics</h3>
-              <div className="flex flex-col gap-5">
-                <MetricBar label="Client Satisfaction" value={95} color="hsl(217, 91%, 60%)" />
-                <MetricBar label="Conversion Efficiency" value={67} color="hsl(262, 83%, 58%)" />
-                <MetricBar label="Speed of Transformation" value={85} color="hsl(192, 91%, 55%)" />
-                <MetricBar label="Code Quality Index" value={92} color="hsl(142, 71%, 45%)" />
-                <MetricBar label="Weekly Uptime" value={99} color="hsl(217, 91%, 60%)" />
+          {/* ── Right: Mouse-reactive floating composition ── */}
+          <div className="lg:col-span-5 relative hidden lg:flex items-center justify-center min-h-[520px]">
+            {/* Central pulsing orb */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="relative w-64 h-64">
+                <motion.div
+                  className="absolute inset-0 rounded-full bg-gradient-to-br from-primary/20 via-accent/10 to-transparent blur-3xl"
+                  animate={{
+                    scale: [1, 1.08, 1],
+                    opacity: [0.4, 0.7, 0.4],
+                  }}
+                  transition={{
+                    duration: 5,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                />
+                <div className="absolute inset-10 rounded-full bg-gradient-to-br from-primary/10 to-accent/5 blur-xl" />
+                <div className="absolute inset-[72px] rounded-full border border-white/[0.04] bg-white/[0.01]" />
+                {/* spinning orbit ring */}
+                <div className="absolute inset-4 rounded-full border border-dashed border-white/[0.04] animate-spin-slow" />
               </div>
-              <p className="text-xs text-gray-500 mt-5">
-                We build experiences worth billions in days, not months.
-              </p>
             </div>
+
+            {/* Mouse-reactive floating chips */}
+            {chips.map((chip, i) => (
+              <motion.div
+                key={chip.label}
+                initial={{ opacity: 0, scale: 0.7 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 1.0 + i * 0.15, ease }}
+                className="absolute"
+                style={{
+                  left: `${chip.x}%`,
+                  top: `${chip.y}%`,
+                  x: mounted
+                    ? smoothX.get() * chip.depth * 25
+                    : 0,
+                  y: mounted
+                    ? smoothY.get() * chip.depth * 25
+                    : 0,
+                }}
+              >
+                <motion.div
+                  className="flex items-center gap-2.5 glass rounded-xl px-4 py-2.5 cursor-default select-none"
+                  whileHover={{ scale: 1.08, borderColor: "rgba(255,255,255,0.12)" }}
+                  animate={{
+                    y: [0, chip.depth * -8, 0],
+                  }}
+                  transition={{
+                    y: {
+                      duration: 4 + i,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    },
+                  }}
+                >
+                  <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center">
+                    <chip.icon className="w-3.5 h-3.5 text-primary/70" />
+                  </div>
+                  <span className="text-xs text-white/50 font-medium">
+                    {chip.label}
+                  </span>
+                </motion.div>
+              </motion.div>
+            ))}
           </div>
-          </ScrollReveal>
         </div>
       </div>
+
+      {/* ── Bottom metrics strip ── */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 1.6 }}
+        className="absolute bottom-0 left-0 right-0 border-t border-white/[0.04]"
+      >
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex items-center justify-between py-5 gap-8 overflow-x-auto hide-scrollbar">
+            {metrics.map((stat, i) => (
+              <div key={stat.label} className="flex items-center gap-3 shrink-0">
+                {i > 0 && (
+                  <div className="w-px h-4 bg-white/[0.06] mr-3 hidden sm:block" />
+                )}
+                <span className="text-sm font-semibold text-white/80 tabular-nums">
+                  {stat.value}
+                </span>
+                <span className="text-[11px] text-white/20 tracking-wide">
+                  {stat.label}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </motion.div>
     </section>
   )
 }

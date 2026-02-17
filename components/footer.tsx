@@ -1,122 +1,108 @@
-import { Button } from "@/components/ui/button"
-import { MapPin, Phone, Mail, ArrowRight } from "lucide-react"
+import Link from "next/link"
+import { ArrowUpRight } from "lucide-react"
 
 const footerLinks = {
-  "Company": ["About Us", "Careers", "Blog", "Contact"],
-  "Services": ["Web Development", "Mobile Apps", "Cloud Solutions", "IT Consulting"],
-  "Products": ["VisCRM", "Work Hour Monitor", "Dialer Online"],
-  "Legal": ["Privacy Policy", "Terms of Service", "Cookie Policy"],
+  Services: [
+    { label: "Web Development", href: "/services#web-development" },
+    { label: "Custom Software", href: "/services#custom-software" },
+    { label: "UI/UX Design", href: "/services#ui-ux-design" },
+    { label: "Automation", href: "/services#automation" },
+  ],
+  Company: [
+    { label: "Projects", href: "/projects" },
+    { label: "Services", href: "/services" },
+    { label: "Contact", href: "/contact" },
+  ],
+  Connect: [
+    { label: "Twitter", href: "#", external: true },
+    { label: "LinkedIn", href: "#", external: true },
+    { label: "GitHub", href: "#", external: true },
+    { label: "Dribbble", href: "#", external: true },
+  ],
 }
-
-const technologies = [
-  "React", "Next.js", "Node.js", "Python", "AWS", "TypeScript",
-  "PostgreSQL", "MongoDB", "Docker", "Kubernetes", "GraphQL", "Redis",
-]
 
 export function Footer() {
   return (
-    <footer className="bg-navy pt-16 pb-6">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Top Section */}
-        <div className="grid lg:grid-cols-12 gap-8 pb-12 border-b border-white/10">
-          {/* Company Info */}
+    <footer className="border-t border-white/[0.06]">
+      <div className="max-w-7xl mx-auto px-6">
+        {/* Main footer */}
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 py-16 lg:py-20">
+          {/* Brand column */}
           <div className="lg:col-span-4">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[hsl(217,91%,60%)] to-[hsl(262,83%,58%)] flex items-center justify-center">
-                <span className="text-white font-bold text-sm">V</span>
-              </div>
-              <span className="text-white font-bold text-lg">
-                Ryu<span className="text-[hsl(217,91%,60%)]">tech</span>
-              </span>
-            </div>
-            <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
-              We craft innovative digital solutions to drive business growth and transform ideas into reality.
+            <Link
+              href="/"
+              className="text-white font-semibold text-xl tracking-tight inline-block mb-4"
+            >
+              ryu<span className="text-primary">tech</span>
+            </Link>
+            <p className="text-sm text-white/30 leading-relaxed max-w-xs mb-6">
+              Precision digital engineering for ambitious businesses. We build
+              software that scales, not just ships.
             </p>
+            <Link
+              href="/contact"
+              className="group inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
+            >
+              Start a conversation
+              <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            </Link>
           </div>
 
-          {/* Links */}
-          <div className="lg:col-span-4 grid grid-cols-2 gap-6">
-            {Object.entries(footerLinks).slice(0, 2).map(([title, links]) => (
+          {/* Link columns */}
+          <div className="lg:col-span-8 grid grid-cols-2 sm:grid-cols-3 gap-8">
+            {Object.entries(footerLinks).map(([title, links]) => (
               <div key={title}>
-                <h4 className="text-white font-semibold text-sm mb-4">{title}</h4>
-                <ul className="flex flex-col gap-2.5">
+                <h4 className="text-xs font-medium text-white/50 uppercase tracking-widest mb-5">
+                  {title}
+                </h4>
+                <ul className="space-y-3">
                   {links.map((link) => (
-                    <li key={link}>
-                      <a href="#" className="text-gray-400 text-sm hover:text-white transition-colors">
-                        {link}
-                      </a>
+                    <li key={link.label}>
+                      {"external" in link && link.external ? (
+                        <a
+                          href={link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="group inline-flex items-center gap-1 text-sm text-white/30 hover:text-white/70 transition-colors duration-300"
+                        >
+                          {link.label}
+                          <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </a>
+                      ) : (
+                        <Link
+                          href={link.href}
+                          className="text-sm text-white/30 hover:text-white/70 transition-colors duration-300"
+                        >
+                          {link.label}
+                        </Link>
+                      )}
                     </li>
                   ))}
                 </ul>
               </div>
             ))}
           </div>
-
-          {/* Contact Info */}
-          <div className="lg:col-span-4">
-            <div className="flex flex-col gap-4">
-              <div className="flex items-start gap-3">
-                <div className="w-9 h-9 rounded-lg bg-[hsl(217,91%,60%)]/10 flex items-center justify-center shrink-0">
-                  <MapPin className="w-4 h-4 text-[hsl(217,91%,60%)]" />
-                </div>
-                <div>
-                  <h5 className="text-white text-sm font-medium mb-0.5">Address</h5>
-                  <p className="text-gray-400 text-xs leading-relaxed">
-                    Suite 4-B, Mughalpura,<br />
-                    Lahore, Pakistan
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <div className="w-9 h-9 rounded-lg bg-[hsl(217,91%,60%)]/10 flex items-center justify-center shrink-0">
-                  <Phone className="w-4 h-4 text-[hsl(217,91%,60%)]" />
-                </div>
-                <div>
-                  <h5 className="text-white text-sm font-medium mb-0.5">Phone</h5>
-                  <p className="text-gray-400 text-xs">+92 300 1234 567</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-3">
-                <div className="w-9 h-9 rounded-lg bg-[hsl(217,91%,60%)]/10 flex items-center justify-center shrink-0">
-                  <Mail className="w-4 h-4 text-[hsl(217,91%,60%)]" />
-                </div>
-                <div>
-                  <h5 className="text-white text-sm font-medium mb-0.5">Email</h5>
-                  <p className="text-gray-400 text-xs">info@variablesoft.com</p>
-                </div>
-              </div>
-              <Button className="bg-[hsl(217,91%,60%)] hover:bg-[hsl(217,91%,50%)] text-white rounded-full px-6 mt-2 w-fit">
-                Start Your Project
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
-            </div>
-          </div>
         </div>
 
-        {/* Technologies Section */}
-        <div className="py-8 border-b border-white/10">
-          <h4 className="text-center text-gray-500 text-sm mb-4 font-serif italic">Technologies We Love</h4>
-          <div className="flex flex-wrap justify-center gap-3">
-            {technologies.map((tech) => (
-              <span
-                key={tech}
-                className="text-xs text-gray-400 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 hover:border-[hsl(217,91%,60%)]/30 transition-colors"
-              >
-                {tech}
-              </span>
-            ))}
+        {/* Bottom bar */}
+        <div className="border-t border-white/[0.04] py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-xs text-white/20">
+            &copy; {new Date().getFullYear()} Ryutech. All rights reserved.
+          </p>
+          <div className="flex items-center gap-6">
+            <Link
+              href="#"
+              className="text-xs text-white/20 hover:text-white/40 transition-colors"
+            >
+              Privacy Policy
+            </Link>
+            <Link
+              href="#"
+              className="text-xs text-white/20 hover:text-white/40 transition-colors"
+            >
+              Terms of Service
+            </Link>
           </div>
-        </div>
-
-        {/* Bottom Bar */}
-        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-gray-500 text-xs">
-            &copy; 2024 Ryutech. All rights reserved.
-          </p>
-          <p className="text-gray-500 text-xs">
-            Designed and developed by{" "}
-            <span className="text-[hsl(217,91%,60%)]">VARIABLE INFOTECH INDIA PRIVATE LIMITED</span>
-          </p>
         </div>
       </div>
     </footer>

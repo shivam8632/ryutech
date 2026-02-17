@@ -1,33 +1,19 @@
-import { Navbar } from "@/components/navbar"
 import { HeroSection } from "@/components/hero-section"
-import { ProductsSection } from "@/components/products-section"
-import { ProjectsSection } from "@/components/projects-section"
-import { InnovationSection } from "@/components/innovation-section"
+import { Marquee } from "@/components/marquee"
+import { ServicesSection } from "@/components/services-section"
+import { ProcessSection } from "@/components/process-section"
 import { StatsSection } from "@/components/stats-section"
 import { CTASection } from "@/components/cta-section"
-import { Footer } from "@/components/footer"
-import { ScrollProgress } from "@/components/scroll-progress"
-import { BackToTop } from "@/components/back-to-top"
-import { SectionDivider } from "@/components/section-divider"
 
-export default function Page() {
+export default function HomePage() {
   return (
-    <main className="min-h-screen">
-      <ScrollProgress />
-      <Navbar />
+    <div className="overflow-hidden">
       <HeroSection />
-      <SectionDivider variant="gradient" />
-      <ProductsSection />
-      <SectionDivider variant="dots" />
-      <ProjectsSection />
-      <SectionDivider variant="gradient" />
-      <InnovationSection />
-      <SectionDivider variant="gradient" />
+      <Marquee />
+      <ServicesSection />
+      <ProcessSection />
       <StatsSection />
-      <SectionDivider variant="wave" />
       <CTASection />
-      <Footer />
-      <BackToTop />
-    </main>
+    </div>
   )
 }

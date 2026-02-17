@@ -1,14 +1,40 @@
-import type { Metadata } from 'next'
-import { Inter, Playfair_Display } from 'next/font/google'
+import type { Metadata } from "next"
+import { Inter } from "next/font/google"
+import "./globals.css"
+import { Navbar } from "@/components/navbar"
+import { Footer } from "@/components/footer"
+import { CustomCursor } from "@/components/custom-cursor"
+import { NoiseOverlay } from "@/components/noise-overlay"
+import { SmoothScroll } from "@/components/smooth-scroll"
 
-import './globals.css'
-
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
-const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair' })
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+})
 
 export const metadata: Metadata = {
-  title: 'Ryutech - Build Better, Operate Smarter, Grow Faster',
-  description: 'At Ryutech, we specialize in creating innovative software and high-performance websites that drive business transformation.',
+  title: {
+    default: "Ryutech — Precision Digital Engineering",
+    template: "%s — Ryutech",
+  },
+  description:
+    "We engineer digital products with surgical precision. Web development, custom software, UI/UX design, and automation solutions for ambitious businesses.",
+  keywords: [
+    "web development",
+    "custom software",
+    "UI/UX design",
+    "automation",
+    "digital agency",
+    "software engineering",
+  ],
+  openGraph: {
+    title: "Ryutech — Precision Digital Engineering",
+    description:
+      "We engineer digital products with surgical precision. Software solutions for ambitious businesses.",
+    type: "website",
+    siteName: "Ryutech",
+  },
 }
 
 export default function RootLayout({
@@ -17,8 +43,16 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body className={`${inter.variable} ${playfair.variable} font-sans antialiased`}>{children}</body>
+    <html lang="en" className="dark">
+      <body className={`${inter.variable} font-sans`}>
+        <SmoothScroll>
+          <CustomCursor />
+          <NoiseOverlay />
+          <Navbar />
+          <main className="min-h-screen bg-background">{children}</main>
+          <Footer />
+        </SmoothScroll>
+      </body>
     </html>
   )
 }
