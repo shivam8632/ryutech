@@ -57,7 +57,7 @@ export function CTASection() {
       id="contact"
       ref={sectionRef}
       onMouseMove={handleMouseMove}
-      className="py-32 lg:py-44 relative overflow-hidden"
+      className="pb-32 lg:pb-40 relative overflow-hidden"
     >
       {/* Mouse-following gradient glow */}
       <motion.div

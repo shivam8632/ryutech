@@ -78,7 +78,7 @@ export function StatsSection() {
   const isInView = useInView(ref, { once: true, margin: "-100px" })
 
   return (
-    <section id="work" className="py-32 lg:py-40 relative" ref={ref}>
+    <section id="work" className="pb-32 lg:pb-40 relative" ref={ref}>
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-primary/[0.02] rounded-full blur-[160px]" />
 
       <div className="max-w-7xl mx-auto px-6 relative">

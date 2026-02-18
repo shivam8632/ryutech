@@ -112,9 +112,8 @@ function BentoCard({
 
         {/* Content */}
         <div
-          className={`relative z-10 p-8 lg:p-10 flex flex-col justify-between h-full ${
-            service.featured ? "min-h-[360px]" : "min-h-[220px]"
-          }`}
+          className={`relative z-10 p-8 lg:p-10 flex flex-col justify-between h-full ${service.featured ? "min-h-[360px]" : "min-h-[220px]"
+            }`}
         >
           <div>
             {/* Header */}
@@ -132,20 +131,18 @@ function BentoCard({
 
             {/* Title */}
             <h3
-              className={`font-semibold text-white/90 group-hover:text-white transition-colors mb-3 ${
-                service.featured
+              className={`font-semibold text-white/90 group-hover:text-white transition-colors mb-3 ${service.featured
                   ? "text-2xl lg:text-3xl"
                   : "text-xl lg:text-2xl"
-              }`}
+                }`}
             >
               {service.title}
             </h3>
 
             {/* Description */}
             <p
-              className={`text-white/25 leading-relaxed group-hover:text-white/35 transition-colors ${
-                service.featured ? "text-base max-w-md" : "text-sm max-w-sm"
-              }`}
+              className={`text-white/25 leading-relaxed group-hover:text-white/35 transition-colors ${service.featured ? "text-base max-w-md" : "text-sm max-w-sm"
+                }`}
             >
               {service.description}
             </p>
@@ -173,7 +170,7 @@ export function ServicesSection() {
   const isInView = useInView(ref, { once: true, margin: "-80px" })
 
   return (
-    <section id="services" className="py-32 lg:py-40" ref={ref}>
+    <section id="services" className="py-32 lg:pb-40" ref={ref}>
       <div className="max-w-7xl mx-auto px-6">
         {/* Section header */}
         <motion.div

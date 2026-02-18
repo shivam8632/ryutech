@@ -14,6 +14,10 @@ export interface Project {
   gradient: string;
   size: "large" | "medium" | "small";
   featured: boolean;
+  /** Folder name under /images/projects/ containing screenshots */
+  imageFolder?: string;
+  /** Image filenames in that folder (first = cover) */
+  images?: string[];
 }
 
 export const projects: Project[] = [
@@ -24,6 +28,8 @@ export const projects: Project[] = [
     category: "Web Development",
     year: "2025",
     client: "Helix Technologies",
+    imageFolder: "helix",
+    images: ["inventory.png", "login.png", "vendor.png", "warehouse.png"],
     description:
       "A unified platform for engineering teams to manage deployments, track incidents, and collaborate in real-time across distributed systems.",
     challenge:
@@ -45,6 +51,8 @@ export const projects: Project[] = [
     category: "Custom Software",
     year: "2024",
     client: "Nurture PNW Staffing",
+    imageFolder: "nurture-pnw-staffing",
+    images: ["home.png"],
     description:
       "An intelligent staffing platform connecting healthcare facilities with qualified professionals through AI-powered matching.",
     challenge:
@@ -58,69 +66,6 @@ export const projects: Project[] = [
     gradient: "from-emerald-500/20 to-emerald-600/5",
     size: "medium",
     featured: true,
-  },
-  {
-    slug: "meridian-finance",
-    title: "Meridian",
-    subtitle: "Financial Analytics Dashboard",
-    category: "UI/UX Design",
-    year: "2025",
-    client: "Meridian Capital",
-    description:
-      "A real-time financial analytics dashboard providing institutional-grade insights for portfolio managers and analysts.",
-    challenge:
-      "Portfolio managers were using spreadsheets and legacy tools to track positions across multiple asset classes. Data was delayed, visualizations were primitive, and decision-making suffered.",
-    solution:
-      "We designed and built a modern analytics dashboard with real-time data streaming, interactive charts, customizable views, and AI-powered anomaly detection. The interface was designed for high-information-density without cognitive overload.",
-    outcome:
-      "Decision-making speed improved by 60%. Eliminated 4 legacy tools. Adopted by 3 additional departments.",
-    tags: ["React", "D3.js", "WebSockets", "Python", "Figma", "PostgreSQL"],
-    color: "#8b5cf6",
-    gradient: "from-violet-500/20 to-violet-600/5",
-    size: "medium",
-    featured: false,
-  },
-  {
-    slug: "autoflow-crm",
-    title: "AutoFlow",
-    subtitle: "Sales Automation CRM",
-    category: "Automation",
-    year: "2024",
-    client: "AutoFlow Inc.",
-    description:
-      "A CRM with built-in automation that eliminates manual data entry and automates follow-up sequences based on prospect behavior.",
-    challenge:
-      "Sales reps were spending 3+ hours daily on manual CRM updates, follow-up scheduling, and pipeline management. Leads were falling through the cracks, and forecasting was unreliable.",
-    solution:
-      "We built automation layers on top of a clean CRM foundation — automatic contact enrichment, behavior-triggered email sequences, smart task prioritization, and predictive lead scoring using machine learning.",
-    outcome:
-      "Sales reps recovered 15 hours/week. Lead conversion rate increased by 35%. Pipeline accuracy improved to 92%.",
-    tags: ["Next.js", "Python", "PostgreSQL", "OpenAI", "Redis", "Stripe"],
-    color: "#f59e0b",
-    gradient: "from-amber-500/20 to-amber-600/5",
-    size: "large",
-    featured: true,
-  },
-  {
-    slug: "vaultkey-security",
-    title: "VaultKey",
-    subtitle: "Zero-Trust Access Platform",
-    category: "Custom Software",
-    year: "2025",
-    client: "VaultKey Security",
-    description:
-      "A zero-trust identity and access management platform for enterprises with complex compliance requirements.",
-    challenge:
-      "The client's existing IAM solution couldn't handle multi-tenant access patterns, lacked audit trails for SOC 2 compliance, and had a clunky admin interface that frustrated IT teams.",
-    solution:
-      "We engineered a zero-trust platform with fine-grained RBAC, complete audit logging, SSO/SAML integration, and an admin dashboard that makes complex access policies manageable. Built for SOC 2, HIPAA, and GDPR compliance.",
-    outcome:
-      "SOC 2 certification achieved in 3 months. Admin task time reduced by 70%. Zero security incidents post-launch.",
-    tags: ["Go", "React", "PostgreSQL", "OAuth 2.0", "Docker", "Terraform"],
-    color: "#06b6d4",
-    gradient: "from-cyan-500/20 to-cyan-600/5",
-    size: "small",
-    featured: false,
   },
   {
     slug: "bloom-ecommerce",
@@ -143,6 +88,98 @@ export const projects: Project[] = [
     size: "small",
     featured: false,
   },
+  {
+    slug: "exclusive-links",
+    title: "Exclusive Links",
+    subtitle: "Link Management Platform",
+    category: "Web Development",
+    year: "2025",
+    client: "Exclusive Links",
+    description:
+      "A platform for creating and managing exclusive links with dashboard analytics, listing management, and detailed tracking.",
+    challenge:
+      "Users needed a centralized way to create exclusive links, track performance, and manage listings across multiple channels.",
+    solution:
+      "We built a full-stack platform with a dashboard for analytics, listing creation and management, detailed views for each link, and secure login flows.",
+    outcome:
+      "Streamlined link management. Real-time analytics. Improved conversion tracking.",
+    tags: ["Next.js", "TypeScript", "PostgreSQL", "Tailwind CSS"],
+    color: "#6366f1",
+    gradient: "from-indigo-500/20 to-indigo-600/5",
+    size: "medium",
+    featured: false,
+    imageFolder: "exclusive-links",
+    images: [
+      "dashboard.png",
+      "details.png",
+      "listing.png",
+      "login.png",
+      "create-listing.png",
+    ],
+  },
+  {
+    slug: "heroes",
+    title: "Heroes",
+    subtitle: "Membership & Community Platform",
+    category: "Web Development",
+    year: "2025",
+    client: "Heroes",
+    description:
+      "A membership platform with signup flows and community features.",
+    challenge:
+      "Building an engaging membership experience with seamless onboarding.",
+    solution:
+      "We developed a modern platform with intuitive signup, membership management, and a welcoming home experience.",
+    outcome: "Streamlined onboarding. Improved member engagement.",
+    tags: ["Next.js", "TypeScript", "Tailwind CSS"],
+    color: "#ef4444",
+    gradient: "from-red-500/20 to-red-600/5",
+    size: "medium",
+    featured: false,
+    imageFolder: "heroes",
+    images: ["home.png", "membership.png", "signup.png"],
+  },
+  {
+    slug: "print-sathi",
+    title: "Print Sathi",
+    subtitle: "Print Services Platform",
+    category: "Web Development",
+    year: "2025",
+    client: "Print Sathi",
+    description:
+      "A platform for finding print services with location-based discovery.",
+    challenge: "Connecting users with local print services efficiently.",
+    solution:
+      "We built a platform with location search, print service discovery, and an intuitive home experience.",
+    outcome: "Easier discovery of print services. Location-based convenience.",
+    tags: ["Next.js", "TypeScript", "Tailwind CSS"],
+    color: "#14b8a6",
+    gradient: "from-teal-500/20 to-teal-600/5",
+    size: "medium",
+    featured: false,
+    imageFolder: "print-sathi",
+    images: ["home.png", "location.png", "print.png"],
+  },
+  {
+    slug: "supernal-ai",
+    title: "Supernal AI",
+    subtitle: "Vendor Product Directory",
+    category: "Custom Software",
+    year: "2025",
+    client: "Supernal AI",
+    description: "An AI-powered vendor and product directory platform.",
+    challenge: "Organizing vendor products and enabling efficient discovery.",
+    solution:
+      "We developed a vendor product directory with signup flows and comprehensive product listings.",
+    outcome: "Streamlined vendor onboarding. Improved product discoverability.",
+    tags: ["Next.js", "TypeScript", "AI", "Tailwind CSS"],
+    color: "#a855f7",
+    gradient: "from-purple-500/20 to-purple-600/5",
+    size: "medium",
+    featured: false,
+    imageFolder: "supernal-ai",
+    images: ["signin.png", "vendor-product-directory.png"],
+  },
 ];
 
 export const categories = [
@@ -155,6 +192,21 @@ export const categories = [
 
 export function getProjectBySlug(slug: string) {
   return projects.find((p) => p.slug === slug);
+}
+
+/** Returns the full path for a project image (e.g. /images/projects/helix/inventory.png) */
+export function getProjectImagePath(
+  project: Project,
+  imageName: string,
+): string {
+  if (!project.imageFolder) return "";
+  return `/images/projects/${project.imageFolder}/${imageName}`;
+}
+
+/** Returns the cover image path (first image) or null */
+export function getProjectCoverImage(project: Project): string | null {
+  if (!project.imageFolder || !project.images?.length) return null;
+  return getProjectImagePath(project, project.images[0]);
 }
 
 export function getFeaturedProjects() {

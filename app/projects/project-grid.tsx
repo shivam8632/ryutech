@@ -3,8 +3,9 @@
 import { useState, useRef, type MouseEvent } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
+import Image from "next/image"
 import { ArrowUpRight } from "lucide-react"
-import { projects, categories } from "@/lib/data/projects"
+import { projects, categories, getProjectCoverImage } from "@/lib/data/projects"
 
 const ease = [0.21, 0.47, 0.32, 0.98] as const
 
@@ -57,10 +58,23 @@ function ProjectCard({
           onMouseLeave={handleMouseLeave}
           className="group relative h-full rounded-2xl border border-white/[0.06] bg-white/[0.02] overflow-hidden transition-[transform] duration-300 ease-out will-change-transform"
         >
-          {/* Gradient background */}
-          <div
-            className={`absolute inset-0 bg-gradient-to-br ${project.gradient} to-transparent`}
-          />
+          {/* Cover image or gradient background */}
+          {getProjectCoverImage(project) ? (
+            <>
+              <Image
+                src={getProjectCoverImage(project)!}
+                alt={project.title}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+            </>
+          ) : (
+            <div
+              className={`absolute inset-0 bg-gradient-to-br ${project.gradient} to-transparent`}
+            />
+          )}
 
           {/* Hover glow */}
           <div
@@ -149,8 +163,8 @@ export function ProjectGrid() {
               key={cat}
               onClick={() => setActiveCategory(cat)}
               className={`text-xs font-medium rounded-full px-4 py-2 border transition-all duration-300 ${activeCategory === cat
-                  ? "bg-primary/10 border-primary/30 text-primary"
-                  : "bg-white/[0.02] border-white/[0.06] text-white/35 hover:text-white/60 hover:border-white/[0.12]"
+                ? "bg-primary/10 border-primary/30 text-primary"
+                : "bg-white/[0.02] border-white/[0.06] text-white/35 hover:text-white/60 hover:border-white/[0.12]"
                 }`}
             >
               {cat}

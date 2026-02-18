@@ -142,7 +142,7 @@ export function HeroSection() {
 
             {/* Main headline — word-by-word clip reveal */}
             <h1 className="text-[clamp(2.8rem,6.5vw,6rem)] font-bold text-white leading-[0.92] tracking-tight">
-              <RevealLine delay={0.35}>We engineer</RevealLine>
+              <RevealLine delay={0.35}>We craft</RevealLine>
               <RevealLine delay={0.55}>digital products</RevealLine>
               <RevealLine delay={0.75} className="gradient-text">
                 with precision.

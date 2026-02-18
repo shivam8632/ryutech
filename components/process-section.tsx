@@ -49,7 +49,7 @@ export function ProcessSection() {
   const lineWidth = useTransform(scrollYProgress, [0, 1], ["0%", "100%"])
 
   return (
-    <section id="process" className="py-32 lg:py-40 relative" ref={sectionRef}>
+    <section id="process" className="pb-32 lg:pb-40 relative" ref={sectionRef}>
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-accent/[0.02] rounded-full blur-[140px]" />
 
       <div className="max-w-7xl mx-auto px-6 relative">

@@ -2,8 +2,10 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { ArrowLeft, ArrowRight, ExternalLink } from "lucide-react"
+import Image from "next/image"
+import { ArrowLeft, ArrowRight } from "lucide-react"
 import type { Project } from "@/lib/data/projects"
+import { getProjectImagePath, getProjectCoverImage } from "@/lib/data/projects"
 
 const ease = [0.21, 0.47, 0.32, 0.98] as const
 
@@ -106,35 +108,67 @@ export function ProjectDetail({
         </div>
       </section>
 
-      {/* Project visual placeholder */}
+      {/* Project images */}
       <section className="pb-20 lg:pb-28">
         <div className="max-w-7xl mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.4, ease }}
-            className="relative rounded-2xl border border-white/[0.06] overflow-hidden"
-            style={{
-              background: `linear-gradient(135deg, ${project.color}08, transparent 60%)`,
-            }}
-          >
-            <div className="aspect-[16/7] flex items-center justify-center">
-              <div className="text-center">
-                <div
-                  className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center"
-                  style={{ backgroundColor: `${project.color}15` }}
-                >
-                  <ExternalLink
-                    className="w-6 h-6"
-                    style={{ color: `${project.color}80` }}
-                  />
+          {project.images?.length ? (
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.4, ease }}
+              className="space-y-6"
+            >
+              {/* Hero image */}
+              <div className="relative rounded-2xl border border-white/[0.06] overflow-hidden aspect-[16/9]">
+                <Image
+                  src={getProjectCoverImage(project)!}
+                  alt={`${project.title} — ${project.images[0]}`}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1280px) 100vw, 1280px"
+                  priority
+                />
+              </div>
+              {/* Gallery grid (remaining images) */}
+              {project.images.length > 1 && (
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                  {project.images.slice(1).map((img, i) => (
+                    <motion.div
+                      key={img}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: 0.5 + i * 0.08, ease }}
+                      className="relative rounded-xl border border-white/[0.06] overflow-hidden aspect-video"
+                    >
+                      <Image
+                        src={getProjectImagePath(project, img)}
+                        alt={`${project.title} — ${img}`}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                      />
+                    </motion.div>
+                  ))}
                 </div>
+              )}
+            </motion.div>
+          ) : (
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.4, ease }}
+              className="relative rounded-2xl border border-white/[0.06] overflow-hidden"
+              style={{
+                background: `linear-gradient(135deg, ${project.color}08, transparent 60%)`,
+              }}
+            >
+              <div className="aspect-[16/7] flex items-center justify-center">
                 <p className="text-sm text-white/20">
                   Project visual — {project.title}
                 </p>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          )}
         </div>
       </section>
 
